@@ -4,11 +4,8 @@ set -e
 
 while true
 do
-  ffmpeg -loglevel info -y -re \
-    -f image2 -loop 1 -i bg.png \
-    -f concat -safe 0 -i <((for f in ./mp3/*.mp3; do path="$PWD/$f"; echo "file ${path@Q}"; done) | shuf) \
-    -c:v libx264 -preset veryfast -b:v 3000k -maxrate 3000k -bufsize 6000k \
-    -framerate 25 -video_size 1280x720 -vf "format=yuv420p" -g 50 -shortest -strict experimental \
-    -c:a aac -b:a 128k -ar 44100 \
-    -f flv rtmp://a.rtmp.youtube.com/live2/$YOUTUBE_KEY
+  ffmpeg -re -i https://live.y2m3u8.workers.dev/stream/7tNtU5XFwrU/master.m3u8 \
+    -c:v copy -c:a aac -ar 44100 -ab 128k -ac 2 -strict -2 \
+    -flags +global_header -bsf:a aac_adtstoasc -bufsize 12M \
+    -f flv rtmp://ivory-ingest.getloconow.com:1935/stream/live_4574OQYW90_5f54e888-2113-4987-93f0-5992793cb58a
 done
