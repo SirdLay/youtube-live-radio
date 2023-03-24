@@ -6,13 +6,13 @@
   "env": {
     "YOUTUBE_KEY": {
       "description": "The YouTube live stream key to be used. Can be found in the YouTube UI",
-      "required": true
+      "required": false
     }
   },
   "formation": {
     "worker": {
       "quantity": 1,
-      "size": "free"
+      "size": "basic"
     }
   }
 }
